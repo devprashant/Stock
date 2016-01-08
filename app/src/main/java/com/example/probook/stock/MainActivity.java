@@ -1,86 +1,90 @@
 package com.example.probook.stock;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.TimePicker;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
-import java.util.Calendar;
 
+public class MainActivity extends FragmentActivity {
 
-public class MainActivity extends ActionBarActivity {
+    int mHour = 15;
+    int mMinute = 15;
 
-    private TimePicker timePicker;
-    private TextView time;
-    private Calendar calendar;
-    private String format = "";
+    /** This handles the message send from TimePickerDialogFragment on setting Time */
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message m){
+            /** Creating a bundle object to pass currently set Time to the fragment */
+            Bundle b = m.getData();
 
+            /** Getting the Hour of day from bundle */
+            mHour = b.getInt("set_hour");
+
+            /** Getting the Minute of the hour from bundle */
+            mMinute = b.getInt("set_minute");
+
+            /** Displaying a short time message containing time set by Time picker dialog fragment */
+            Toast.makeText(getBaseContext(), b.getString("set_time"), Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        timePicker = (TimePicker) findViewById(R.id.timePicker);
-        time = (TextView) findViewById(R.id.textView);
-        calendar = Calendar.getInstance();
+        /** Click Event Handler for button */
+        OnClickListener listener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int min = calendar.get(Calendar.MINUTE);
-        showTime(hour, min);
-    }
+                /** Creating a bundle object to pass currently set time to the fragment */
+                Bundle b = new Bundle();
 
-   public void setTime(View view){
-        int hour = timePicker.getCurrentHour();
-        int min = timePicker.getCurrentMinute();
-        showTime(hour, min);
-    }
+                /** Adding currently set hour to bundle object */
+                b.putInt("set_hour", mHour);
 
-    public void showTime(int hour, int min) {
-        if (hour == 0){
-            hour += 12;
-            format = "AM";
-        } else if ( hour == 12){
-            format = "PM";
-        } else if (hour > 12){
-            hour -= 12;
-            format = "PM";
-        } else {
-            format = "AM";
-        }
+                /** Adding currently set minute to bundle object */
+                b.putInt("set_minute", mMinute);
 
-        time.setText(
-                new StringBuilder()
-                        .append(hour)
-                        .append(":")
-                        .append(min)
-                        .append(" ")
-                        .append(format)
-        );
+                /** Instantiating TimePickerDialogFragment */
+                TimePickerDialogFragment timePicker = new TimePickerDialogFragment(mHandler);
+
+                /** Setting the bundle object on timepicker fragment */
+                timePicker.setArguments(b);
+
+                /** Getting fragment manger for this activity */
+                FragmentManager fm = getSupportFragmentManager();
+
+                /** Starting a fragment transaction */
+                FragmentTransaction ft = fm.beginTransaction();
+
+                /** Adding the fragment object to the fragment transaction */
+                ft.add(timePicker, "time_picker");
+
+                /** Opening the TimePicker fragment */
+                ft.commit();
+            }
+        };
+
+        /** Getting an instance of Set button */
+        Button btnSet = (Button)findViewById(R.id.btnSet);
+
+        /** Setting click event listener for the button */
+        btnSet.setOnClickListener(listener);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
