@@ -1,10 +1,13 @@
-package com.example.probook.stock;
+package com.example.probook.stock.view;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+
+import com.example.probook.stock.R;
+import com.example.probook.stock.view.CollectionPagerAdapter;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -54,14 +57,12 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
-
         for(int i =0; i< tabsActionBar.length ; i++){
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(tabsActionBar[i])
                             .setTabListener(tabListener));
         }
-
 
     }
 }
