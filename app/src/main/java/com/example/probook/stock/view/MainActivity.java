@@ -5,10 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-
 import com.example.probook.stock.R;
-import com.example.probook.stock.view.CollectionPagerAdapter;
-
 
 public class MainActivity extends ActionBarActivity {
 
