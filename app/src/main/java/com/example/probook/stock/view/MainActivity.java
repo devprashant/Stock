@@ -10,7 +10,7 @@ import com.example.probook.stock.R;
 public class MainActivity extends ActionBarActivity {
 
     CollectionPagerAdapter mCollectionPagerAdapter;
-    ViewPager mViewPager;
+    public static ViewPager mViewPager;
     public static final String[] tabsActionBar = {"List","Add","Search"};
 
     @Override
