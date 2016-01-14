@@ -14,6 +14,7 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter{
         super(fm);
     }
 
+
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = new Fragment();
@@ -25,12 +26,12 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter{
                 fragment.setArguments(args);
                 break;
             case 1:
-                fragment = new ObjectAddFragment();
+                fragment = new ObjectFragment();
                 args.putString(ObjectFragment.ARG_OBJECT, "Add Fragment");
                 fragment.setArguments(args);
                 break;
             case 2:
-                fragment = new ObjectFragment();
+                fragment = new ObjectAddFragment();
                 args.putString(ObjectFragment.ARG_OBJECT, "Just Fragment");
                 fragment.setArguments(args);
                 break;

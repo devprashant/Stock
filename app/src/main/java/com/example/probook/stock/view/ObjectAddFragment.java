@@ -30,7 +30,6 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
         super.onActivityCreated(savedInstanceState);
         // get data from edit text
         // save data on btn click
-
         Button btnSave = (Button) getActivity().findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
     }
@@ -47,6 +46,7 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
         String itemName = etItemName.getText().toString();
         String itemQuantity = etItemQuantity.getText().toString();
         String itemPrice = etItemPrice.getText().toString();
+
         // Save data
         saveData(itemName, itemQuantity, itemPrice);
 

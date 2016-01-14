@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.example.probook.stock.R;
+import com.example.probook.stock.handler.customAdapter.customListObjectAdapter;
 import com.example.probook.stock.handler.dataSource.DataSource;
 import com.example.probook.stock.model.Stock;
 import java.sql.SQLException;
@@ -19,9 +20,9 @@ import java.util.List;
  */
 public class ObjectListFragment extends Fragment {
 
-    public static final String ARG_OBJECT = "object";
+    public customListObjectAdapter adapter;
+
     private DataSource dataSource;
-    private ArrayAdapter<Stock> adapter;
     private ListView lv;
 
     @Override
@@ -48,13 +49,12 @@ public class ObjectListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // Fetch data
-
         List<Stock> values = dataSource.getAllStocks();
 
         // Set ListView
         // List data
         lv = (ListView) getView().findViewById(R.id.list);
-        adapter = new ArrayAdapter<Stock>(getActivity(),android.R.layout.simple_list_item_1, values);
+        adapter = new customListObjectAdapter(getActivity(),values);
         lv.setAdapter(adapter);
     }
 }
