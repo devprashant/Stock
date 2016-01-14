@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.example.probook.stock.R;
 import com.example.probook.stock.handler.dataSource.DataSource;
+import com.example.probook.stock.model.Stock;
 import java.sql.SQLException;
 
 /**
@@ -48,11 +49,15 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
         String itemPrice = etItemPrice.getText().toString();
 
         // Save data
-        saveData(itemName, itemQuantity, itemPrice);
+        Stock stock = new Stock();
+        stock.setItem_name(itemName);
+        stock.setItem_quantity(itemQuantity);
+        stock.setItem_price(itemPrice);
+        saveData(stock);
 
     }
 
-    private void saveData(String itemName, String itemQuantity, String itemPrice) {
+    private void saveData(Stock stock) {
         dataSource = new DataSource(getActivity());
         try {
             dataSource.open();
@@ -60,7 +65,6 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
             e.printStackTrace();
         }
 
-        dataSource.addStock(itemName, itemQuantity, itemPrice);
-
+        dataSource.addStock(stock);
     }
 }

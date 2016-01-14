@@ -42,11 +42,11 @@ public class DataSource {
         dbHelper.close();
     }
 
-    public Stock addStock(String item_name, String item_quantity, String item_price){
+    public Stock addStock(Stock stock){
         ContentValues values = new ContentValues();
-        values.put(MySqliteHelper.COL_ITEM_NAME, item_name);
-        values.put(MySqliteHelper.COL_ITEM_QUANTITY, item_quantity);
-        values.put(MySqliteHelper.COL_PRICE, item_price);
+        values.put(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
+        values.put(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
+        values.put(MySqliteHelper.COL_PRICE, stock.getItem_price());
 
         System.out.println("values to store: " + values);
         Log.w("Inside: ", " Value inserting to db");
@@ -60,6 +60,18 @@ public class DataSource {
         cursor.close();
         return newStock;
 
+    }
+
+    public int editStock(Stock stock){
+        ContentValues values = new ContentValues();
+        values.put(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
+        values.put(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
+        values.put(MySqliteHelper.COL_PRICE, stock.getItem_price());
+
+        long id = stock.getId();
+        int updateStatus  = database.update(MySqliteHelper.TABLE_STOCK,values,MySqliteHelper.COL_ID + " = " + id, null);
+
+        return updateStatus;
     }
 
     public void deleteStock(Stock stock){
