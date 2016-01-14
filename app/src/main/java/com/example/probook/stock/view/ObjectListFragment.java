@@ -62,7 +62,7 @@ public class ObjectListFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),"hey",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
             }
         });
 
