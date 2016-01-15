@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.example.probook.stock.R;
 import com.example.probook.stock.handler.dataSource.DataSource;
 import com.example.probook.stock.model.Stock;
@@ -70,9 +72,14 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
 
         dataSource.addStock(stock);
 
+        // Show saved message
+        Toast.makeText(getActivity(),"Saved",Toast.LENGTH_SHORT).show();
+
         // Clear edittext
         etItemName.setText("");
         etItemQuantity.setText("");
         etItemPrice.setText("");
+
+
     }
 }
