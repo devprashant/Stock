@@ -1,8 +1,10 @@
 package com.example.probook.stock.view;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +62,11 @@ public class ObjectListFragment extends Fragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
-                return false;
+
+                ObjectEditDialogFragment editDialog = new ObjectEditDialogFragment();
+                editDialog.show(getFragmentManager(),"dialog");
+
+                return true;
             }
         });
 
