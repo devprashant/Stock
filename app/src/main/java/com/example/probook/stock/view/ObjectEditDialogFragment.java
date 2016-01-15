@@ -77,7 +77,7 @@ public class ObjectEditDialogFragment extends DialogFragment {
                 .setNegativeButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(), "Update clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Stock Updated", Toast.LENGTH_SHORT).show();
                         Stock stock = new Stock();
 
                         itemName = etItemName.getText().toString();
@@ -95,13 +95,14 @@ public class ObjectEditDialogFragment extends DialogFragment {
                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(), "Cancel clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Edit Canceled", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(), "Neutral clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Item Deleted", Toast.LENGTH_SHORT).show();
+                        dataSource.deleteStock(itemId);
                     }
                 });
 

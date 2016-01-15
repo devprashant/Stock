@@ -78,8 +78,8 @@ public class DataSource {
         return updateStatus;
     }
 
-    public void deleteStock(Stock stock){
-        long id = stock.getId();
+    public void deleteStock(long id){
+
         database.delete(MySqliteHelper.TABLE_STOCK, MySqliteHelper.COL_ID + " = " + id, null);
     }
 
@@ -88,12 +88,12 @@ public class DataSource {
 
         Log.w("Inside: "," List all stocks");
         Cursor cursor = database.query(MySqliteHelper.TABLE_STOCK,allColumns,null,null,null,null,null);
-        cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
+        cursor.moveToLast();
+        while(!cursor.isBeforeFirst()){
             Stock stock = cursorToStock(cursor);
 
             stocks.add(stock);
-            cursor.moveToNext();
+            cursor.moveToPrevious();
 
             System.out.println("Stocks modified on: " + stock.getModified_on());
         }
