@@ -19,7 +19,10 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
 
     private DataSource dataSource;
 
-    public static final String ARG_OBJECT = "object";
+    private EditText etItemName;
+    private EditText etItemQuantity;
+    private EditText etItemPrice;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_object, container, false);
@@ -39,9 +42,9 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
 
         // Find edittext
-        EditText etItemName = (EditText) getView().findViewById(R.id.et_item_name);
-        EditText etItemQuantity = (EditText) getView().findViewById(R.id.et_item_quantity);
-        EditText etItemPrice = (EditText) getView().findViewById(R.id.et_item_price);
+        etItemName = (EditText) getView().findViewById(R.id.et_item_name);
+        etItemQuantity = (EditText) getView().findViewById(R.id.et_item_quantity);
+        etItemPrice = (EditText) getView().findViewById(R.id.et_item_price);
 
         // Fetch data from edittext
         String itemName = etItemName.getText().toString();
@@ -66,5 +69,10 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
         }
 
         dataSource.addStock(stock);
+
+        // Clear edittext
+        etItemName.setText("");
+        etItemQuantity.setText("");
+        etItemPrice.setText("");
     }
 }

@@ -16,15 +16,17 @@ public class MySqliteHelper extends SQLiteOpenHelper {
     public static final String COL_ITEM_NAME = "item_name";
     public static final String COL_ITEM_QUANTITY = "item_quantity";
     public static final String COL_PRICE = "price";
+    public static final String COL_MODIFIED_ON = "modified_on";
 
 
     private static final String DATABASE_NAME = "stock2.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_CREATE = "create table " + TABLE_STOCK + "("
             + COL_ID + " integer primary key autoincrement, "
             + COL_ITEM_NAME + " text not null, "
             + COL_ITEM_QUANTITY + " text not null, "
-            + COL_PRICE + " text not null"
+            + COL_PRICE + " text not null, "
+            + COL_MODIFIED_ON + " text not null"
             + ")";
 
     public MySqliteHelper(Context context){

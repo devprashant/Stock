@@ -58,10 +58,14 @@ public class customListObjectAdapter extends BaseAdapter {
         TextView txtItemName = (TextView) convertView.findViewById(R.id.txt_item_name);
         TextView txtItemQuantity = (TextView) convertView.findViewById(R.id.txt_item_quantity);
         TextView txtItemPrice = (TextView) convertView.findViewById(R.id.txt_item_price);
+        TextView txtModifiedOn = (TextView) convertView.findViewById(R.id.txt_modified_on);
 
         txtItemName.setText(stocks.get(position).getItem_name());
         txtItemQuantity.setText(stocks.get(position).getItem_quantity());
         txtItemPrice.setText(stocks.get(position).getItem_price());
+        txtModifiedOn.setText(stocks.get(position).getModified_on());
+
+        System.out.println("Date: " + stocks.get(position).getModified_on());
 
         return convertView;
     }

@@ -5,12 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.example.probook.stock.helper.database.MySqliteHelper;
 import com.example.probook.stock.model.Stock;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -25,6 +24,7 @@ public class DataSource {
             ,dbHelper.COL_ITEM_NAME
             ,dbHelper.COL_ITEM_QUANTITY
             ,dbHelper.COL_PRICE
+            ,dbHelper.COL_MODIFIED_ON
             };
 
     public DataSource(Context context) {
@@ -43,11 +43,14 @@ public class DataSource {
     }
 
     public Stock addStock(Stock stock){
+
         ContentValues values = new ContentValues();
         values.put(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
         values.put(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
         values.put(MySqliteHelper.COL_PRICE, stock.getItem_price());
+        values.put(MySqliteHelper.COL_MODIFIED_ON, String.valueOf(Calendar.DATE));
 
+        System.out.println("Date: " + String.valueOf(Calendar.DATE));
         System.out.println("values to store: " + values);
         Log.w("Inside: ", " Value inserting to db");
         long insertId = database.insert(MySqliteHelper.TABLE_STOCK,null, values);
@@ -67,6 +70,7 @@ public class DataSource {
         values.put(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
         values.put(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
         values.put(MySqliteHelper.COL_PRICE, stock.getItem_price());
+        values.put(MySqliteHelper.COL_MODIFIED_ON, String.valueOf(Calendar.DATE));
 
         long id = stock.getId();
         int updateStatus  = database.update(MySqliteHelper.TABLE_STOCK,values,MySqliteHelper.COL_ID + " = " + id, null);
@@ -90,9 +94,10 @@ public class DataSource {
 
             stocks.add(stock);
             cursor.moveToNext();
+
+            System.out.println("Stocks modified on: " + stock.getModified_on());
         }
 
-        System.out.println("All Stocks: " + stocks);
         cursor.close();
         return stocks;
     }
@@ -103,6 +108,7 @@ public class DataSource {
         stock.setItem_name(cursor.getString(1));
         stock.setItem_quantity(cursor.getString(2));
         stock.setItem_price(cursor.getString(3));
+        stock.setModified_on(cursor.getString(4));
 
         Log.w("Inside: ", " cursorToStock()");
         System.out.println("cts " + stock);

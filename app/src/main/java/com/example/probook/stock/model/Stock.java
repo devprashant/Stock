@@ -9,6 +9,7 @@ public class Stock {
     private String item_name;
     private String item_quantity;
     private String item_price;
+    private String modified_on;
 
     public long getId() {
         return id;
@@ -40,5 +41,13 @@ public class Stock {
 
     public void setItem_price(String item_price) {
         this.item_price = item_price;
+    }
+
+    public String getModified_on() {
+        return modified_on;
+    }
+
+    public void setModified_on(String modified_on) {
+        this.modified_on = modified_on;
     }
 }
