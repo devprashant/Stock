@@ -2,13 +2,21 @@ package com.example.probook.stock.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+import com.example.probook.stock.R;
+import com.example.probook.stock.handler.dataSource.DataSource;
+import com.example.probook.stock.helper.database.MySqliteHelper;
+import com.example.probook.stock.model.Stock;
+
+import java.sql.SQLException;
 
 
 /**
@@ -16,21 +24,72 @@ import android.widget.Toast;
  */
 public class ObjectEditDialogFragment extends DialogFragment {
 
+    private AlertDialog.Builder builder;
+    private LayoutInflater inflater;
+    private View dialogView;
+    private EditText etItemName;
+    private EditText etItemQuantity;
+    private EditText etItemPrice;
+
+    private long itemId;
+    private String itemName;
+    private String itemQuantity;
+    private String itemPrice;
+
+    private DataSource dataSource;
+
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.e("Fragment: ", "Attached");
+
+        dataSource = new DataSource(getActivity());
+        try {
+            dataSource.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Stock")
-                .setNegativeButton("Edit", new DialogInterface.OnClickListener() {
+        builder = new AlertDialog.Builder(getActivity());
+
+        inflater = getActivity().getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.fragment_edit_object, null);
+
+        etItemName = (EditText) dialogView.findViewById(R.id.et_item_name);
+        etItemQuantity = (EditText) dialogView.findViewById(R.id.et_item_quantity);
+        etItemPrice = (EditText) dialogView.findViewById(R.id.et_item_price);
+
+        itemId = getArguments().getLong(MySqliteHelper.COL_ID);
+        itemName = getArguments().getString(MySqliteHelper.COL_ITEM_NAME);
+        itemQuantity = getArguments().getString(MySqliteHelper.COL_ITEM_QUANTITY);
+        itemPrice = getArguments().getString(MySqliteHelper.COL_PRICE);
+
+        etItemName.setText(itemName);
+        etItemQuantity.setText(itemQuantity);
+        etItemPrice.setText(itemPrice);
+
+        builder.setTitle("Edit Stock")
+                .setView(dialogView)
+                .setNegativeButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(), "Edit clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Update clicked", Toast.LENGTH_SHORT).show();
+                        Stock stock = new Stock();
+
+                        itemName = etItemName.getText().toString();
+                        itemQuantity = etItemQuantity.getText().toString();
+                        itemPrice = etItemPrice.getText().toString();
+
+                        stock.setId(itemId);
+                        stock.setItem_name(itemName);
+                        stock.setItem_quantity(itemQuantity);
+                        stock.setItem_price(itemPrice);
+
+                        UpdateData(stock);
                     }
                 })
                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -45,6 +104,13 @@ public class ObjectEditDialogFragment extends DialogFragment {
                         Toast.makeText(getActivity(), "Neutral clicked", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
+
         return builder.create();
+    }
+
+    private void UpdateData(Stock stock) {
+        dataSource.updateStock(stock);
     }
 }

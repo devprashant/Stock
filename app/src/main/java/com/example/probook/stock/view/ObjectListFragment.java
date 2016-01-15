@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.probook.stock.R;
 import com.example.probook.stock.handler.customAdapter.customListObjectAdapter;
 import com.example.probook.stock.handler.dataSource.DataSource;
+import com.example.probook.stock.helper.database.MySqliteHelper;
 import com.example.probook.stock.model.Stock;
 import java.sql.SQLException;
 import java.util.List;
@@ -59,12 +60,23 @@ public class ObjectListFragment extends Fragment {
         lv = (ListView) getView().findViewById(R.id.list);
         adapter = new customListObjectAdapter(getActivity(),values);
         lv.setAdapter(adapter);
+
+        // Open dialog fragment for edit and delete
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ObjectEditDialogFragment editDialog = new ObjectEditDialogFragment();
-                editDialog.show(getFragmentManager(),"dialog");
+                Stock stock = (Stock) adapter.getItem(position);
+                //Toast.makeText(getActivity(), stock.getItem_name(), Toast.LENGTH_SHORT).show();
+                ObjectEditDialogFragment editDialogFragment = new ObjectEditDialogFragment();
+                Bundle args = new Bundle();
+                args.putString(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name() );
+                args.putString(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
+                args.putString(MySqliteHelper.COL_PRICE, stock.getItem_price());
+                args.putLong(MySqliteHelper.COL_ID, stock.getId());
+
+                editDialogFragment.setArguments(args);
+                editDialogFragment.show(getFragmentManager(),"dialog");
 
                 return true;
             }

@@ -65,7 +65,7 @@ public class DataSource {
 
     }
 
-    public int editStock(Stock stock){
+    public int updateStock(Stock stock){
         ContentValues values = new ContentValues();
         values.put(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
         values.put(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
