@@ -102,12 +102,13 @@ public class ObjectListFragment extends Fragment {
         etSearch.addTextChangedListener(new TextWatcher() {
            @Override
            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                
+
            }
 
            @Override
            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s);
+               System.out.println("Text ["+s+"]");
+                adapter.getFilter().filter(s.toString());
            }
 
            @Override

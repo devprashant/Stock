@@ -11,7 +11,6 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import com.example.probook.stock.R;
 import com.example.probook.stock.model.Stock;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +20,15 @@ import java.util.List;
 public class customListObjectAdapter extends BaseAdapter implements Filterable{
 
     private List<Stock> stocks;
+    private List<Stock> allStocks;
     private Activity activity;
     private LayoutInflater inflater;
 
-
+    private StockFilter stockFilter;
     public customListObjectAdapter( Activity activity, List<Stock> stocks) {
-        this.stocks = stocks;
+        this.allStocks = stocks;
         this.activity = activity;
+        this.stocks = stocks;
     }
 
     @Override
@@ -69,7 +70,7 @@ public class customListObjectAdapter extends BaseAdapter implements Filterable{
         txtItemPrice.setText(stocks.get(position).getItem_price());
         txtModifiedOn.setText(stocks.get(position).getModified_on());
 
-        System.out.println("Date: " + stocks.get(position).getModified_on());
+        //System.out.println("Date: " + stocks.get(position).getModified_on());
 
         return convertView;
     }
@@ -77,34 +78,44 @@ public class customListObjectAdapter extends BaseAdapter implements Filterable{
 
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
+        if (stockFilter == null){
+            stockFilter = new StockFilter();
+        }
+        return stockFilter;
+    }
 
-                if ( constraint == null || constraint.length() == 0){
-                    results.values = stocks;
-                    results.count = stocks.size();
-                } else {
-                    List<Stock> filteredStock = new ArrayList<>();
+    private class StockFilter extends Filter{
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
 
-                    for(Stock s: stocks){
-                        if(s.getItem_name().toUpperCase().contains(constraint.toString().toUpperCase())){
-                            filteredStock.add(s);
-                        }
+            FilterResults results = new FilterResults();
+
+            if ( constraint == null || constraint.length() == 0){
+
+                results.values = allStocks;
+                results.count = allStocks.size();
+
+            } else {
+                List<Stock> filteredStock = new ArrayList<>();
+
+                for(Stock s: allStocks){
+                    if(s.getItem_name().toUpperCase().contains(constraint.toString().toUpperCase())){
+                        filteredStock.add(s);
                     }
-
-                    results.values = filteredStock;
-                    results.count = filteredStock.size();
                 }
-                return results;
-            }
 
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
+                results.values = filteredStock;
+                results.count = filteredStock.size();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
                 stocks = (List<Stock>) results.values;
                 notifyDataSetChanged();
-            }
-        };
+
+        }
     }
 }

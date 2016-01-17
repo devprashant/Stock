@@ -50,8 +50,8 @@ public class DataSource {
         values.put(MySqliteHelper.COL_PRICE, stock.getItem_price());
         values.put(MySqliteHelper.COL_MODIFIED_ON, String.valueOf(Calendar.DATE));
 
-        System.out.println("Date: " + String.valueOf(Calendar.DATE));
-        System.out.println("values to store: " + values);
+        //System.out.println("Date: " + String.valueOf(Calendar.DATE));
+        //System.out.println("values to store: " + values);
         //Log.w("Inside: ", " Value inserting to db");
         long insertId = database.insert(MySqliteHelper.TABLE_STOCK,null, values);
 
