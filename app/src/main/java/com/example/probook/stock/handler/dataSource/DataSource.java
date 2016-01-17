@@ -28,17 +28,17 @@ public class DataSource {
             };
 
     public DataSource(Context context) {
-        Log.w("Inside: ", " DataSource Constructor");
+        //Log.w("Inside: ", " DataSource Constructor");
         dbHelper = new MySqliteHelper(context);
     }
 
     public void open() throws SQLException{
-        Log.w("Inside: "," DS open()");
+        //Log.w("Inside: "," DS open()");
         database = dbHelper.getWritableDatabase();
     }
 
     public void close() {
-        Log.w("Inside: ", " DS close()");
+        //Log.w("Inside: ", " DS close()");
         dbHelper.close();
     }
 
@@ -52,10 +52,10 @@ public class DataSource {
 
         System.out.println("Date: " + String.valueOf(Calendar.DATE));
         System.out.println("values to store: " + values);
-        Log.w("Inside: ", " Value inserting to db");
+        //Log.w("Inside: ", " Value inserting to db");
         long insertId = database.insert(MySqliteHelper.TABLE_STOCK,null, values);
 
-        Log.w("Inside: "," Query DB for value entered");
+        //Log.w("Inside: "," Query DB for value entered");
         Cursor cursor = database.query(MySqliteHelper.TABLE_STOCK, allColumns, MySqliteHelper.COL_ID + " = " + insertId, null, null, null, null);
 
         cursor.moveToFirst();
@@ -73,7 +73,7 @@ public class DataSource {
         values.put(MySqliteHelper.COL_MODIFIED_ON, String.valueOf(Calendar.DATE));
 
         long id = stock.getId();
-        int updateStatus  = database.update(MySqliteHelper.TABLE_STOCK,values,MySqliteHelper.COL_ID + " = " + id, null);
+        int updateStatus  = database.update(MySqliteHelper.TABLE_STOCK, values, MySqliteHelper.COL_ID + " = " + id, null);
 
         return updateStatus;
     }
@@ -86,8 +86,9 @@ public class DataSource {
     public List<Stock> getAllStocks(){
         List<Stock> stocks = new ArrayList<Stock>();
 
-        Log.w("Inside: "," List all stocks");
+        //Log.w("Inside: "," List all stocks");
         Cursor cursor = database.query(MySqliteHelper.TABLE_STOCK,allColumns,null,null,null,null,null);
+        //System.out.println("All " + cursor.getCount());
         cursor.moveToLast();
         while(!cursor.isBeforeFirst()){
             Stock stock = cursorToStock(cursor);
@@ -95,13 +96,41 @@ public class DataSource {
             stocks.add(stock);
             cursor.moveToPrevious();
 
-            System.out.println("Stocks modified on: " + stock.getModified_on());
+            //System.out.println("Stocks modified on: " + stock.getModified_on());
         }
 
-        cursor.close();
+        cursor.close(); getAllStockNames();
         return stocks;
     }
 
+    public List<String> getAllStockNames(){
+        List<String> allStockNames = new ArrayList<>();
+
+        String[] stockName = { MySqliteHelper.COL_ID, MySqliteHelper.COL_ITEM_NAME };
+
+        // Get unique item names
+        //Cursor cursor = database.rawQuery(sql,null);
+        Cursor cursor = database.query(
+                true
+                ,MySqliteHelper.TABLE_STOCK
+                ,stockName
+                ,null,null
+                ,MySqliteHelper.COL_ITEM_NAME
+                ,null,null,null
+        );
+
+        cursor.moveToFirst();
+
+        while ( !cursor.isAfterLast() ){
+            allStockNames.add(cursor.getString(1));
+            //System.out.println("Stock Name: " + cursor.getString(1));
+            cursor.moveToNext();
+        }
+
+        //System.out.println("Stock Names: " + allStockNames);
+        cursor.close();
+        return  allStockNames;
+    }
     private Stock cursorToStock(Cursor cursor) {
         Stock stock = new Stock();
         stock.setId(cursor.getLong(0));
@@ -110,8 +139,8 @@ public class DataSource {
         stock.setItem_price(cursor.getString(3));
         stock.setModified_on(cursor.getString(4));
 
-        Log.w("Inside: ", " cursorToStock()");
-        System.out.println("cts " + stock);
+        //Log.w("Inside: ", " cursorToStock()");
+        //System.out.println("cts " + stock);
         return stock;
     }
 
