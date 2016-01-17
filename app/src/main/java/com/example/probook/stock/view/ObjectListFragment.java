@@ -70,32 +70,6 @@ public class ObjectListFragment extends Fragment {
         // List data
         ListView lv = (ListView) getView().findViewById(R.id.list);
 
-        /**
-         * 2. Get EditText data and use it to list items inside ListVIew.
-         */
-
-        EditText etSearch = (EditText) getView().findViewById(R.id.et_search);
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    for (int i =0; i < values.size(); i++){
-                        if (!values.get(i).getItem_name().contains(s)){
-                            values.remove(i);
-                        }
-                    }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
         adapter = new customListObjectAdapter(getActivity(), values);
         lv.setAdapter(adapter);
 
@@ -119,5 +93,29 @@ public class ObjectListFragment extends Fragment {
                 return true;
             }
         });
+
+        /**
+         * 2. Get EditText data and use it to list items inside ListVIew.
+         */
+
+        EditText etSearch = (EditText) getView().findViewById(R.id.et_search);
+        etSearch.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+
+           }
+       });
+
+
     }
 }

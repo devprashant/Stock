@@ -6,15 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import com.example.probook.stock.R;
 import com.example.probook.stock.model.Stock;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by probook on 1/14/2016.
  */
-public class customListObjectAdapter extends BaseAdapter {
+public class customListObjectAdapter extends BaseAdapter implements Filterable{
 
     private List<Stock> stocks;
     private Activity activity;
@@ -71,4 +75,36 @@ public class customListObjectAdapter extends BaseAdapter {
     }
 
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+
+                if ( constraint == null || constraint.length() == 0){
+                    results.values = stocks;
+                    results.count = stocks.size();
+                } else {
+                    List<Stock> filteredStock = new ArrayList<>();
+
+                    for(Stock s: stocks){
+                        if(s.getItem_name().toUpperCase().contains(constraint.toString().toUpperCase())){
+                            filteredStock.add(s);
+                        }
+                    }
+
+                    results.values = filteredStock;
+                    results.count = filteredStock.size();
+                }
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                stocks = (List<Stock>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
 }
