@@ -14,7 +14,6 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter{
         super(fm);
     }
 
-
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = new Fragment();

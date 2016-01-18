@@ -3,10 +3,10 @@ package com.example.probook.stock.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,7 +15,6 @@ import com.example.probook.stock.R;
 import com.example.probook.stock.handler.dataSource.DataSource;
 import com.example.probook.stock.helper.database.MySqliteHelper;
 import com.example.probook.stock.model.Stock;
-
 import java.sql.SQLException;
 
 
@@ -90,6 +89,7 @@ public class ObjectEditDialogFragment extends DialogFragment {
                         stock.setItem_price(itemPrice);
 
                         UpdateData(stock);
+                        dbUpdated();
                     }
                 })
                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -103,6 +103,7 @@ public class ObjectEditDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "Item Deleted", Toast.LENGTH_SHORT).show();
                         dataSource.deleteStock(itemId);
+                        dbUpdated();
                     }
                 });
 
@@ -113,5 +114,11 @@ public class ObjectEditDialogFragment extends DialogFragment {
 
     private void UpdateData(Stock stock) {
         dataSource.updateStock(stock);
+    }
+
+    private void dbUpdated(){
+        Intent intent = new Intent(getActivity(),MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

@@ -1,10 +1,8 @@
 package com.example.probook.stock.view;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.example.probook.stock.R;
 import com.example.probook.stock.handler.customAdapter.customListObjectAdapter;
 import com.example.probook.stock.handler.dataSource.DataSource;
@@ -116,7 +113,5 @@ public class ObjectListFragment extends Fragment {
 
            }
        });
-
-
     }
 }
