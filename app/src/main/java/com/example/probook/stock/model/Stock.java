@@ -10,6 +10,7 @@ public class Stock {
     private String item_quantity;
     private String item_price;
     private String modified_on;
+    private String created_on;
 
     public long getId() {
         return id;
@@ -49,5 +50,13 @@ public class Stock {
 
     public void setModified_on(String modified_on) {
         this.modified_on = modified_on;
+    }
+
+    public String getCreated_on() {
+        return created_on;
+    }
+
+    public void setCreated_on(String created_on) {
+        this.created_on = created_on;
     }
 }

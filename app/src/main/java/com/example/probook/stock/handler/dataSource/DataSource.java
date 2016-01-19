@@ -45,14 +45,14 @@ public class DataSource {
 
     public Stock addStock(Stock stock){
 
-        String sDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         ContentValues values = new ContentValues();
         values.put(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
         values.put(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
         values.put(MySqliteHelper.COL_PRICE, stock.getItem_price());
-        values.put(MySqliteHelper.COL_MODIFIED_ON, String.valueOf(sDate));
+        values.put(MySqliteHelper.COL_CREATED_ON, stock.getCreated_on());
+        values.put(MySqliteHelper.COL_MODIFIED_ON, stock.getModified_on());
 
-        System.out.println("Date: " + String.valueOf(sDate));
+
         //System.out.println("values to store: " + values);
         //Log.w("Inside: ", " Value inserting to db");
         long insertId = database.insert(MySqliteHelper.TABLE_STOCK,null, values);
