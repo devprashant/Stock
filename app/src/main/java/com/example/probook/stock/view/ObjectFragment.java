@@ -1,4 +1,4 @@
-package com.example.probook.stock;
+package com.example.probook.stock.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.probook.stock.R;
 
 /**
  * Created by probook on 1/12/2016.
@@ -19,7 +21,7 @@ public class ObjectFragment extends Fragment {
         Bundle args = getArguments();
 
         ((TextView) rootView.findViewById(R.id.text1))
-                .setText(Integer.toString(args.getInt(ARG_OBJECT)));
+                .setText(args.getString(ARG_OBJECT));
 
         return rootView;
     }

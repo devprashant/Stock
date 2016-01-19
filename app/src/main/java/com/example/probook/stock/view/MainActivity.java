@@ -1,17 +1,17 @@
-package com.example.probook.stock;
+package com.example.probook.stock.view;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-
+import com.example.probook.stock.R;
 
 public class MainActivity extends ActionBarActivity {
 
     CollectionPagerAdapter mCollectionPagerAdapter;
-    ViewPager mViewPager;
-    public static final String[] tabsActionBar = {"List","Add","Search"};
+    public static ViewPager mViewPager;
+    public static final String[] tabsActionBar = {"List","Log","Add"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +54,12 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
-
         for(int i =0; i< tabsActionBar.length ; i++){
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(tabsActionBar[i])
                             .setTabListener(tabListener));
         }
-
 
     }
 }
