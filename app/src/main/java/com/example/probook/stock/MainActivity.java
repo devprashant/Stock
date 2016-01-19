@@ -7,15 +7,19 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 
 public class MainActivity extends FragmentActivity {
 
+    private TextView txtShowDate;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txtShowDate = (TextView) findViewById(R.id.txt_show_date);
         findViewById(R.id.date).setOnClickListener(new OnClickListener() {
 
             @Override
@@ -47,11 +51,13 @@ public class MainActivity extends FragmentActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
+            String sDate = String.valueOf(year) + "-" + String.valueOf(monthOfYear)
+                    + "-" + String.valueOf(dayOfMonth);
             Toast.makeText(
-                    MainActivity.this,
-                    String.valueOf(year) + "-" + String.valueOf(monthOfYear)
-                            + "-" + String.valueOf(dayOfMonth),
-                    Toast.LENGTH_LONG).show();
+                    MainActivity.this
+                    ,sDate
+                    ,Toast.LENGTH_LONG).show();
+            txtShowDate.setText(sDate);
         }
     };
 
