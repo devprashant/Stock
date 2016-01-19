@@ -11,7 +11,7 @@ public class MainActivity extends ActionBarActivity {
 
     CollectionPagerAdapter mCollectionPagerAdapter;
     public static ViewPager mViewPager;
-    public static final String[] tabsActionBar = {"List","Search","Add"};
+    public static final String[] tabsActionBar = {"List","Log","Add"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.probook.stock.helper.database.MySqliteHelper;
 import com.example.probook.stock.model.Stock;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -44,13 +45,14 @@ public class DataSource {
 
     public Stock addStock(Stock stock){
 
+        String sDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         ContentValues values = new ContentValues();
         values.put(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
         values.put(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
         values.put(MySqliteHelper.COL_PRICE, stock.getItem_price());
-        values.put(MySqliteHelper.COL_MODIFIED_ON, String.valueOf(Calendar.DATE));
+        values.put(MySqliteHelper.COL_MODIFIED_ON, String.valueOf(sDate));
 
-        //System.out.println("Date: " + String.valueOf(Calendar.DATE));
+        System.out.println("Date: " + String.valueOf(sDate));
         //System.out.println("values to store: " + values);
         //Log.w("Inside: ", " Value inserting to db");
         long insertId = database.insert(MySqliteHelper.TABLE_STOCK,null, values);

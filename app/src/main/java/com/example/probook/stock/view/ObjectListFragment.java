@@ -104,7 +104,7 @@ public class ObjectListFragment extends Fragment {
 
            @Override
            public void onTextChanged(CharSequence s, int start, int before, int count) {
-               System.out.println("Text ["+s+"]");
+               //System.out.println("Text ["+s+"]");
                 adapter.getFilter().filter(s.toString());
            }
 
