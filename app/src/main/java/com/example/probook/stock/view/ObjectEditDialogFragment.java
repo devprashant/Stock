@@ -15,6 +15,7 @@ import com.example.probook.stock.R;
 import com.example.probook.stock.handler.dataSource.DataSource;
 import com.example.probook.stock.helper.database.MySqliteHelper;
 import com.example.probook.stock.model.Stock;
+import com.example.probook.stock.view.ObjectListFragment.onEditCompleteListener;
 import java.sql.SQLException;
 
 /**
@@ -38,6 +39,17 @@ public class ObjectEditDialogFragment extends DialogFragment {
 
     private DataSource dataSource;
 
+    onEditCompleteListener onEditComplete;
+
+    public void setCallBack(onEditCompleteListener onEdit){
+        onEditComplete = onEdit;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onEditComplete.onEditComplete(0);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -122,6 +134,6 @@ public class ObjectEditDialogFragment extends DialogFragment {
     private void dbUpdated(){
         Intent intent = new Intent(getActivity(),MainActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        //getActivity().finish();
     }
 }

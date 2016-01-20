@@ -68,7 +68,7 @@ public class customListObjectAdapter extends BaseAdapter implements Filterable{
         txtItemName.setText(stocks.get(position).getItem_name());
         txtItemQuantity.setText(stocks.get(position).getItem_quantity());
         txtItemPrice.setText(stocks.get(position).getItem_price());
-        //txtModifiedOn.setText(stocks.get(position).getModified_on());
+        txtModifiedOn.setText(stocks.get(position).getModified_on());
 
         return convertView;
     }

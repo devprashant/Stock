@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,15 @@ public class ObjectListFragment extends Fragment {
                 args.putString(MySqliteHelper.COL_MODIFIED_ON, stock.getModified_on());
                 args.putLong(MySqliteHelper.COL_ID, stock.getId());
 
+                onEditCompleteListener onEdit = new onEditCompleteListener() {
+                    @Override
+                    public void onEditComplete(int status) {
+                        Log.e("Status", String.valueOf(status));
+                        adapter.notifyDataSetChanged();
+                    }
+                };
 
+                editDialogFragment.setCallBack(onEdit);
                 editDialogFragment.setArguments(args);
                 editDialogFragment.show(getFragmentManager(), "dialog");
 
@@ -93,27 +102,33 @@ public class ObjectListFragment extends Fragment {
             }
         });
 
+
+
         /**
          * 2. Get EditText data and use it to list items inside ListVIew.
          */
 
         EditText etSearch = (EditText) getView().findViewById(R.id.et_search);
         etSearch.addTextChangedListener(new TextWatcher() {
-           @Override
-           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-           }
+            }
 
-           @Override
-           public void onTextChanged(CharSequence s, int start, int before, int count) {
-               //System.out.println("Text ["+s+"]");
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //System.out.println("Text ["+s+"]");
                 adapter.getFilter().filter(s.toString());
-           }
+            }
 
-           @Override
-           public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-           }
-       });
+            }
+        });
+    }
+
+    public interface onEditCompleteListener {
+        void onEditComplete(int status);
     }
 }
