@@ -31,7 +31,6 @@ public class MySqliteHelper extends SQLiteOpenHelper {
             + COL_CREATED_ON + " text not null"
             + ")";
 
-
     public MySqliteHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.w("Inside: ", " DB Constructor");

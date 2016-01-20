@@ -101,7 +101,7 @@ public class ObjectAddFragment extends Fragment implements View.OnClickListener 
             // Set Selected time in  calender object
             calender.set(year, monthOfYear, dayOfMonth);
 
-            // Set txtViw to calecalender text
+            // Set txtView to calender text
             txtCreatedOn.setText(sDate);
         }
     };

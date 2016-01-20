@@ -21,5 +21,4 @@
         android:id="@+id/et_item_price"
         android:hint="Price"/>
 
-
 </LinearLayout>

@@ -40,7 +40,6 @@ public class ObjectListFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list_object, container,false);
@@ -82,7 +81,10 @@ public class ObjectListFragment extends Fragment {
                 args.putString(MySqliteHelper.COL_ITEM_NAME, stock.getItem_name());
                 args.putString(MySqliteHelper.COL_ITEM_QUANTITY, stock.getItem_quantity());
                 args.putString(MySqliteHelper.COL_PRICE, stock.getItem_price());
+                args.putString(MySqliteHelper.COL_CREATED_ON, stock.getCreated_on());
+                args.putString(MySqliteHelper.COL_MODIFIED_ON, stock.getModified_on());
                 args.putLong(MySqliteHelper.COL_ID, stock.getId());
+
 
                 editDialogFragment.setArguments(args);
                 editDialogFragment.show(getFragmentManager(), "dialog");

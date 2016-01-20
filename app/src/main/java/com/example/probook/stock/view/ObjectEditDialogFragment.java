@@ -17,7 +17,6 @@ import com.example.probook.stock.helper.database.MySqliteHelper;
 import com.example.probook.stock.model.Stock;
 import java.sql.SQLException;
 
-
 /**
  * Created by probook on 1/15/2016.
  */
@@ -34,6 +33,8 @@ public class ObjectEditDialogFragment extends DialogFragment {
     private String itemName;
     private String itemQuantity;
     private String itemPrice;
+    private String createdOn;
+    private String modifiedOn;
 
     private DataSource dataSource;
 
@@ -66,6 +67,8 @@ public class ObjectEditDialogFragment extends DialogFragment {
         itemName = getArguments().getString(MySqliteHelper.COL_ITEM_NAME);
         itemQuantity = getArguments().getString(MySqliteHelper.COL_ITEM_QUANTITY);
         itemPrice = getArguments().getString(MySqliteHelper.COL_PRICE);
+        createdOn = getArguments().getString(MySqliteHelper.COL_CREATED_ON);
+        modifiedOn = getArguments().getString(MySqliteHelper.COL_MODIFIED_ON);
 
         etItemName.setText(itemName);
         etItemQuantity.setText(itemQuantity);
@@ -87,6 +90,8 @@ public class ObjectEditDialogFragment extends DialogFragment {
                         stock.setItem_name(itemName);
                         stock.setItem_quantity(itemQuantity);
                         stock.setItem_price(itemPrice);
+                        stock.setCreated_on(createdOn);
+                        stock.setModified_on(modifiedOn);
 
                         UpdateData(stock);
                         dbUpdated();
@@ -106,8 +111,6 @@ public class ObjectEditDialogFragment extends DialogFragment {
                         dbUpdated();
                     }
                 });
-
-
 
         return builder.create();
     }

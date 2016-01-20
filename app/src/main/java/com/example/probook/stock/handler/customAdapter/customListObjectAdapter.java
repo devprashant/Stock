@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class customListObjectAdapter extends BaseAdapter implements Filterable{
 
-    private List<Stock> stocks;
+    private List<Stock> stocks; // Filtered stocks stay here
     private List<Stock> allStocks;
     private Activity activity;
     private LayoutInflater inflater;
@@ -68,9 +68,7 @@ public class customListObjectAdapter extends BaseAdapter implements Filterable{
         txtItemName.setText(stocks.get(position).getItem_name());
         txtItemQuantity.setText(stocks.get(position).getItem_quantity());
         txtItemPrice.setText(stocks.get(position).getItem_price());
-        txtModifiedOn.setText(stocks.get(position).getModified_on());
-
-        //System.out.println("Date: " + stocks.get(position).getModified_on());
+        //txtModifiedOn.setText(stocks.get(position).getModified_on());
 
         return convertView;
     }
@@ -91,10 +89,8 @@ public class customListObjectAdapter extends BaseAdapter implements Filterable{
             FilterResults results = new FilterResults();
 
             if ( constraint == null || constraint.length() == 0){
-
                 results.values = allStocks;
                 results.count = allStocks.size();
-
             } else {
                 List<Stock> filteredStock = new ArrayList<>();
 
@@ -112,10 +108,8 @@ public class customListObjectAdapter extends BaseAdapter implements Filterable{
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-
                 stocks = (List<Stock>) results.values;
                 notifyDataSetChanged();
-
         }
     }
 }
